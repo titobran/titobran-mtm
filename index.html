@@ -2,84 +2,84 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brandon Ramírez | Portafolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #0e0e0e;
+      margin: 0;
+      padding: 0;
+      background: #0e0e0e;
       color: #f1f1f1;
-      line-height: 1.6;
+      text-align: center;
     }
 
     header {
-      background: #111;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #333;
+      padding: 40px 20px 20px;
     }
 
-    header h1 {
+    header img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00bcd4;
+    }
+
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 36px;
       color: #00bcd4;
+    }
+
+    h3 {
       margin: 0;
-    }
-
-    nav a {
-      color: #f1f1f1;
-      text-decoration: none;
-      margin-left: 20px;
-    }
-
-    nav a:hover {
-      color: #00bcd4;
+      font-weight: normal;
+      color: #aaa;
     }
 
     section {
-      padding: 60px 40px;
-      max-width: 1000px;
-      margin: auto;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
-    h2 {
-      color: #00bcd4;
-      margin-bottom: 10px;
-    }
-
-    .project {
-      background: #1c1c1c;
-      padding: 20px;
-      border-radius: 8px;
+    .tech {
       margin-top: 20px;
     }
 
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .skill {
+    .tech span {
       background: #00bcd4;
       color: #000;
       padding: 6px 12px;
       border-radius: 4px;
+      margin: 4px;
+      display: inline-block;
       font-weight: bold;
     }
 
+    .project img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
     .social a {
+      margin: 0 10px;
+      font-size: 28px;
       color: #00bcd4;
-      margin-right: 15px;
-      font-size: 24px;
+      transition: 0.3s;
+    }
+
+    .social a:hover {
+      color: #fff;
     }
 
     footer {
-      text-align: center;
-      padding: 20px;
-      background: #111;
+      margin: 60px 0 20px;
+      font-size: 14px;
       color: #777;
     }
   </style>
@@ -87,48 +87,42 @@
 <body>
 
   <header>
+    <!-- Aquí va tu foto personal -->
+    <img src="foto-brandon.png" alt="Foto de Brandon Ramírez">
     <h1>Brandon Ramírez</h1>
-    <nav>
-      <a href="#sobre-mi">Sobre mí</a>
-      <a href="#habilidades">Habilidades</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+    <h3>Desarrollador Web | Explorador Digital del Océano 🌊</h3>
   </header>
 
-  <section id="sobre-mi">
-    <h2>Sobre mí</h2>
-    <p>Soy Brandon Ramírez, desarrollador web enfocado en crear experiencias digitales efectivas. Apasionado por la tecnología, los océanos y el diseño funcional.</p>
+  <section>
+    <h2>🧠 Sobre mí</h2>
+    <p>Soy Brandon, desarrollador web creativo, autodidacta y apasionado por la tecnología y los océanos.<br>
+    Me gusta crear experiencias digitales que conecten con la gente.</p>
   </section>
 
-  <section id="habilidades">
-    <h2>Habilidades</h2>
-    <div class="skills">
-      <div class="skill">HTML</div>
-      <div class="skill">CSS</div>
-      <div class="skill">JavaScript</div>
-      <div class="skill">React</div>
-      <div class="skill">Tailwind</div>
-      <div class="skill">Git</div>
+  <section>
+    <h2>💻 Tecnologías</h2>
+    <div class="tech">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>React</span>
+      <span>Tailwind</span>
+      <span>Git</span>
     </div>
   </section>
 
-  <section id="proyectos">
-    <h2>Proyectos</h2>
-
-    <div class="project">
-      <h3>Creador de la página MTM</h3>
-      <p>Diseño y desarrollo completo del sitio MTM - Tu Portal al Océano Digital. Incluye frontend moderno, navegación responsiva y despliegue en GitHub Pages.</p>
-      <a href="https://minucrack.github.io/mtm-web/" target="_blank" style="color: #00bcd4;">Ver proyecto</a>
-    </div>
-
-    <!-- Puedes agregar más proyectos aquí -->
+  <section class="project">
+    <h2>🚀 Proyecto Destacado: MTM</h2>
+    <p><strong>Creador de la página MTM - Tu Portal al Océano Digital</strong></p>
+    <p>Sitio moderno informativo sobre el mundo marino, con diseño responsivo, navegación clara y despliegue en GitHub Pages.</p>
+    <a href="https://minucrack.github.io/mtm-web/" target="_blank" style="color: #00bcd4;">🔗 Ver proyecto</a><br>
+    <img src="https://via.placeholder.com/600x350" alt="Preview del proyecto MTM">
   </section>
 
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <p>¿Quieres trabajar conmigo o tienes una idea? Escríbeme:</p>
-    <p>Email: <a href="mailto:brandonramirez@example.com" style="color: #00bcd4;">brandonramirez@example.com</a></p>
+  <section>
+    <h2>📬 Contacto</h2>
+    <p>¿Te interesa trabajar conmigo o colaborar?</p>
+    <p><strong>Email:</strong> <a href="mailto:brandonramirez@example.com" style="color:#00bcd4;">brandonramirez@example.com</a></p>
     <div class="social">
       <a href="https://github.com/MINUCRACK" target="_blank"><i class="fab fa-github"></i></a>
       <a href="https://linkedin.com/in/brandonramirez" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -136,8 +130,10 @@
   </section>
 
   <footer>
-    © 2025 Brandon Ramírez. Todos los derechos reservados.
+    Hecho con 💙 por Brandon Ramírez • © 2025
   </footer>
 
 </body>
 </html>
+
+
