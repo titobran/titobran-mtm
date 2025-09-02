@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MTM — Tu Portal al Océano Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #f1f1f1;
+      background-color: #282c34; /* Fallback background */
+    }
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: fixed;
+      width: calc(100% - 40px);
+      color: white;
+      background-color: rgba(40, 44, 52, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+    }
+    header nav button {
+      border: none;
+      margin: 0 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .auth-buttons button {
+      background: linear-gradient(45deg, #007bff, #00c6ff);
+      color: white;
+      border-radius: 20px;
+      padding: 10px 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .auth-buttons button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url('oceano.jpg');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .main-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 8rem;
+      margin: 0;
+      color: #ffffff;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin-top: 10px;
+      font-weight: 400;
+      color: #f1f1f1;
+    }
+    .info-section {
+      padding: 60px 20px;
+    }
+    .info-section .content-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .info-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .info-section p, .info-section ul {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      text-align: justify;
+    }
+    #about {
+      background-color: #0d1b2a;
+    }
+    #purpose {
+      background-color: #0d1b2a;
+    }
+    #purpose ul {
+        list-style: none;
+        padding: 0;
+    }
+    #purpose li {
+        margin-bottom: 10px;
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #282c34;
+      color: #f1f1f1;
+      margin: 10% auto;
+      padding: 25px;
+      border: 1px solid #555;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .close-btn {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close-btn:hover,
+    .close-btn:focus {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .modal-content h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .modal-content p {
+      margin-bottom: 20px;
+    }
+    .modal-content input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #00c6ff;
+      background-color: #333a45;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .modal-content button[type="submit"] {
+      background: linear-gradient(45deg, #007bff, #00c6ff);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .social-login .social-btn {
+      width: calc(50% - 10px);
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #00c6ff;
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .section-separator {
+      border: 0;
+      height: 1px;
+      background-image: linear-gradient(to right, rgba(0, 198, 255, 0), rgba(0, 198, 255, 0.75), rgba(0, 198, 255, 0));
+      margin: 40px auto;
+      width: 80%;
+      max-width: 800px;
+    }
+    #news .news-layout-reversed {
+      display: flex;
+      flex-direction: row; /* Default: text on left, image on right */
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    #news .news-title-container {
+      flex: 1;
+      min-width: 300px; /* Minimum width before wrapping */
+      text-align: center; /* Center the title */
+    }
+    #news .news-title-container h2 {
+      font-size: 3.5rem; /* Make the title larger */
+      line-height: 1.2;
+      margin-bottom: 0; /* Remove default margin */
+    }
+    #news .news-image-and-text-container {
+      flex: 1;
+      min-width: 300px; /* Minimum width before wrapping */
+      text-align: center; /* Center content within this container */
+    }
+    #news .news-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 20px; /* Space between image and text */
+    }
+    #news .news-image-and-text-container p {
+      text-align: center; /* Center the paragraph text */
+      margin-bottom: 20px;
+    }
+    .read-more-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #007bff, #00c6ff);
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+    .read-more-link:hover {
+      transform: translateY(-2px);
+    }
+    footer {
+      background-color: #0d1b2a;
+      color: #f1f1f1;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+    footer .content-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Responsive Navigation */
+    .hamburger-menu-btn {
+      display: none; /* Hidden by default on desktop */
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .mobile-nav {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(40, 44, 52, 0.95); /* Semi-transparent dark background */
+      z-index: 2500;
+      padding-top: 80px; /* Space for header */
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .mobile-nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      width: 80%;
+      max-width: 300px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .mobile-nav button:hover {
+      background-color: rgba(0, 198, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      header nav:first-of-type {
+        display: none; /* Hide regular navigation buttons */
+      }
+      .hamburger-menu-btn {
+        display: block; /* Show hamburger on mobile */
+      }
+      header {
+        justify-content: space-between; /* Distribute items */
+      }
+      .auth-buttons {
+        display: flex; /* Keep auth buttons visible */
+        align-items: center;
+      }
+    }
+
+    /* Responsive Navigation */
+    .hamburger-menu-btn {
+      display: none; /* Hidden by default on desktop */
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .mobile-nav {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(40, 44, 52, 0.95); /* Semi-transparent dark background */
+      z-index: 2500;
+      padding-top: 80px; /* Space for header */
+      align-items: center;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .mobile-nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      width: 80%;
+      max-width: 300px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .mobile-nav button:hover {
+      background-color: rgba(0, 198, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      header nav:first-of-type {
+        display: none; /* Hide regular navigation buttons */
+      }
+      .hamburger-menu-btn {
+        display: block; /* Show hamburger on mobile */
+      }
+      header {
+        justify-content: space-between; /* Distribute items */
+      }
+      .auth-buttons {
+        display: flex; /* Keep auth buttons visible */
+        align-items: center;
+      }
+    }
+
+    .explore-button {
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-top: 30px;
+    }
+
+    .explore-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Animation for button click */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.7);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(0, 198, 255, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 198, 255, 0);
+      }
+    }
+
+    .pulse-animation {
+      animation: pulse 1s ease-out;
+    }
+
+    /* Species Section Layout */
+    #species .species-layout {
+      display: flex;
+      flex-direction: row; /* Image on left, text on right */
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    #species .species-image-container {
+      flex: 1;
+      min-width: 300px; /* Minimum width before wrapping */
+      text-align: center;
+    }
+    #species .species-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #species .species-text-content {
+      flex: 1;
+      min-width: 300px; /* Minimum width before wrapping */
+      text-align: left;
+    }
+    #species .species-text-content h2 {
+      font-size: 3.5rem; /* Make the title larger */
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .species-list-container {
+      display: none; /* Hidden by default */
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .species-list-container h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00c6ff;
+    }
+
+    .species-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .species-item {
+      background-color: #0d1b2a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      border: 1px solid #00c6ff;
+    }
+
+    .species-item:hover {
+      transform: translateY(-5px);
+      background-color: #1a2a3a;
+    }
+
+    .news-articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .news-article-item {
+      background-color: #0d1b2a;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #00c6ff;
+    }
+
+    .news-article-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .news-article-item h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: #00c6ff;
+    }
+
+    .news-article-image {
+      max-width: 100%;
+      height: 200px; /* Fixed height for images */
+      object-fit: cover; /* Cover the area, cropping if necessary */
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .news-article-item p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .read-more-article-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #007bff, #00c6ff);
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .read-more-article-link:hover {
+      transform: translateY(-2px);
+    }
+    .species-detail-container {
+      padding: 60px 20px;
+      background-color: #0d1b2a; /* Consistent with other sections */
+    }
+
+    .species-detail-container h3 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #00c6ff;
+    }
+
+    .species-detail-container p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .species-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .species-type-item {
+      background-color: #1a2a3a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .species-type-item:hover {
+      transform: translateY(-5px);
+      background-color: #00c6ff; /* Highlight on hover */
+      color: #282c34;
+    }
+    .species-detail-image {
+      max-width: 100%;
+      height: 250px; /* Fixed height for consistency */
+      object-fit: cover; /* Cover the area, cropping if necessary */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 20px; /* Space below the image */
+    }
+  </style>
+  </style>
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <button onclick="document.getElementById('about').scrollIntoView()">¿Quiénes somos?</button>
+      <button onclick="document.getElementById('purpose').scrollIntoView()">¿Para qué sirve?</button>
+      <button onclick="document.getElementById('news').scrollIntoView()">Noticias</button>
+      <button onclick="document.getElementById('species').scrollIntoView()">Especies</button>
+    </nav>
+    <nav class="auth-buttons">
+      <button id="hamburgerMenuBtn" class="hamburger-menu-btn">☰</button>
+      <button id="registerBtn">Regístrate</button>
+      <button id="loginBtn">Iniciar Sesión</button>
+      <button id="creditsBtn">Créditos</button>
+      <button id="premiumBtn">Premium</button>
+      <button id="menuToggle">Abrir menú de usuario</button>
+    </nav>
+  </header>
+
+  <div id="mobileNav" class="mobile-nav">
+    <button onclick="document.getElementById('about').scrollIntoView(); document.getElementById('mobileNav').style.display='none';">¿Quiénes somos?</button>
+    <button onclick="document.getElementById('purpose').scrollIntoView(); document.getElementById('mobileNav').style.display='none';">¿Para qué sirve?</button>
+    <button onclick="document.getElementById('news').scrollIntoView(); document.getElementById('mobileNav').style.display='none';">Noticias</button>
+    <button onclick="document.getElementById('species').scrollIntoView(); document.getElementById('mobileNav').style.display='none';">Especies</button>
+  </div>
+
+  <div class="hero-section">
+    <div>
+      <h1 class="main-logo">MTM</h1>
+      <h2 class="tagline">Tu Portal al Océano Digital</h2>
+    </div>
+  </div>
+
+  <hr class="section-separator">
+
+  <section id="about" class="info-section">
+    <div class="content-wrapper">
+      <h2>¿Quiénes somos?</h2>
+      <p>
+        En MTM, somos un equipo de apasionados por la vida marina y la conservación de los océanos. Nuestra misión es crear un portal digital donde la curiosidad y el conocimiento se encuentran, ofreciendo información accesible y fascinante sobre la increíble diversidad de nuestros mares. Creemos que al entender el océano, podemos protegerlo mejor para las futuras generaciones.
+      </p>
+    </div>
+  </section>
+
+  <hr class="section-separator">
+
+  <section id="purpose" class="info-section">
+    <div class="content-wrapper">
+      <h2>Navega por MTM: ¿Qué Encontrarás?</h2>
+        <p>MTM es tu centro de mando para todo lo relacionado con el mundo marino. Aquí puedes:</p>
+        <ul>
+            <li><strong>Aprender:</strong> Descubrir información detallada sobre miles de especies marinas.</li>
+            <li><strong>Informarte:</strong> Mantenerte al día con las últimas noticias sobre los océanos, la conservación y los descubrimientos científicos.</li>
+            <li><strong>Explorar:</strong> Sumergirte en datos y estudios para entender la complejidad y la belleza de los ecosistemas marinos.</li>
+        </ul>
+    </div>
+  </section>
+
+  <hr class="section-separator">
+
+  <section id="news" class="info-section">
+    <div class="content-wrapper">
+      <div class="news-layout-reversed">
+        <div class="news-title-container">
+          <h2>Mareas de Noticias: Lo Último del Océano</h2>
+        </div>
+        <div class="news-image-and-text-container">
+          <img src="noticias marinas.jfif" alt="Noticias Marinas" class="news-image">
+          <p>Mantente al día con las últimas novedades, descubrimientos y esfuerzos de conservación en el vasto mundo marino.</p>
+          <a href="#latest-news-section" class="read-more-link" id="readMoreNewsBtn">Saber más</a>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-separator">
+
+  <section id="latest-news-section" class="info-section" style="display: none;">
+    <div class="content-wrapper">
+      <h2>Profundidades Informativas: Novedades Marinas</h2>
+      <div class="news-articles-grid">
+        <div class="news-article-item">
+          <h3>Descubrimiento de Nueva Especie de Pez Abisal</h3>
+          <img src="noticia 1.jfif" alt="Pez Abisal" class="news-article-image">
+          <p>Científicos han descubierto una fascinante nueva especie de pez en las profundidades del Océano Pacífico, adaptada a condiciones extremas.</p>
+          <a href="#" class="read-more-article-link">Leer más</a>
+        </div>
+        <div class="news-article-item">
+          <h3>Iniciativas Globales para la Conservación de Corales</h3>
+          <img src="noticia 2.jfif" alt="Corales" class="news-article-image">
+          <p>Se lanzan nuevos proyectos internacionales para proteger y restaurar los arrecifes de coral, vitales para la biodiversidad marina.</p>
+          <a href="#" class="read-more-article-link">Leer más</a>
+        </div>
+        <div class="news-article-item">
+          <h3>Tiburón Tigre</h3>
+          <img src="noticia 3.jfif" alt="Contaminación Plástica" class="news-article-image">
+          <p>El tiburón tigre (Galeocerdo cuvier) es conocido como el "basurero del mar" por su dieta increíblemente amplia. Puede medir más de 5 metros y se encuentra en aguas tropicales y templadas. Tiene rayas oscuras en el dorso que se difuminan con la edad. Se alimenta de peces, tortugas, aves, mamíferos marinos e incluso basura. Está clasificado como "Casi Amenazado" por la UICN debido a la pesca por sus aletas y piel.</p>
+          <a href="#" class="read-more-article-link">Leer más</a>
+        </div>
+        <div class="news-article-item">
+          <h3>Tiburón Ballena</h3>
+          <img src="noticia 4.jfif" alt="Ballenas" class="news-article-image">
+          <p>El tiburón ballena (Rhincodon typus) es el pez más grande del mundo, un gigante apacible que se alimenta por filtración. Puede alcanzar los 18 metros de longitud. Su cuerpo es grisáceo con un patrón único de puntos y líneas blancas o amarillentas. Se alimenta de plancton, krill y pequeños peces. Se encuentra en aguas cálidas y está clasificado como "En Peligro" por la UICN debido a la pesca, colisiones con barcos y contaminación.</p>
+          <a href="#" class="read-more-article-link">Leer más</a>
+        </div>
+      </div>
+      <button id="backToNewsBtn" class="explore-button" style="margin-top: 40px;">Volver a Noticias Principales</button>
+      <button id="hideNewsBtn" class="explore-button" style="margin-top: 40px; margin-left: 10px;">Ocultar Noticias</button>
+    </div>
+  </section>
+
+  <section id="species" class="info-section">
+    <div class="content-wrapper">
+      <div class="species-layout">
+        <div class="species-image-container">
+          <img src="especies marinas.jpg" alt="Especies Marinas" class="species-image">
+        </div>
+        <div class="species-text-content">
+          <h2>Sumérgete en la Biodiversidad Marina</h2>
+          <p>Sumérgete en el fascinante mundo de las criaturas que habitan nuestros océanos. Desde los majestuosos cetáceos hasta los diminutos organismos del plancton, descubre la increíble diversidad de la vida marina.</p>
+          <button id="exploreSpeciesBtn" class="explore-button">Explorar Especies</button>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="speciesListContainer" class="info-section species-list-container">
+    <div class="content-wrapper">
+      <h3>Elige tu Aventura Submarina</h3>
+      <div class="species-grid">
+        <div class="species-item" data-species="corales">Corales</div>
+        <div class="species-item" data-species="tiburones">Tiburones</div>
+        <div class="species-item" data-species="ballenas">Ballenas</div>
+        <div class="species-item" data-species="camarones">Camarones</div>
+        <div class="species-item" data-species="tortugas">Tortugas</div>
+        <div class="species-item" data-species="estrellas-de-mar">Estrellas de Mar</div>
+      </div>
+      <button id="backToMainSpeciesBtn" class="explore-button" style="margin-top: 40px;">Volver</button>
+    </div>
+  </div>
+
+  <!-- Species Detail Sections -->
+
+  <div id="coral-blanqueadoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral Blanqueado: Un Grito de Auxilio del Océano</h3>
+      <img src="coral.jfif" alt="Coral Blanqueado" class="species-detail-image">
+      <p>El blanqueamiento de coral es un fenómeno alarmante donde los corales expulsan las algas simbióticas (zooxantelas) que viven en sus tejidos, lo que les causa la pérdida de color y, si el estrés persiste, la muerte. Este proceso es una respuesta al estrés ambiental, principalmente al aumento de la temperatura del agua, pero también puede ser causado por la contaminación o la acidificación del océano. El blanqueamiento masivo de corales es una clara señal del impacto del cambio climático en los ecosistemas marinos y representa una grave amenaza para la salud de los arrecifes de coral a nivel mundial.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+
+  <div id="coral-blandoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral Blando: La Danza Flexible del Arrecife</h3>
+      <img src="coral.jfif" alt="Coral Blando" class="species-detail-image">
+      <p>Los corales blandos, orden Alcyonacea, son colonias de pólipos sin esqueleto de carbonato de calcio. Tienen escleritas, pequeñas partículas calcáreas, que les dan soporte. Su estructura flexible y carnosa, con formas y colores variados, se asemeja a plantas. Se encuentran en todos los océanos, principalmente en aguas tropicales, y se alimentan de zooplancton, fitoplancton y materia orgánica, además de la simbiosis con algas zooxantelas. Se reproducen sexual y asexualmente y son vitales para los ecosistemas marinos, ofreciendo refugio y alimento a muchas especies.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+  
+
+  <div id="tiburonesDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburones: Señores del Abismo</h3>
+      <img src="tiburones.jfif" alt="Tiburones" class="species-detail-image">
+      <p>Los tiburones son peces cartilaginosos, depredadores marinos que han existido por millones de años. Varían enormemente en tamaño, desde pequeños tiburones pigmeos hasta el gigantesco tiburón ballena. Poseen mandíbulas poderosas con dientes afilados, aunque algunas especies son filtradoras. Habitan en todos los océanos y desempeñan un papel crucial en el ecosistema marino como depredadores tope. A pesar de su reputación, los ataques a humanos son raros.</p>
+      <div class="species-types-grid">
+        <div class="species-type-item" data-species="tiburon-blanco">Tiburón Blanco</div>
+        <div class="species-type-item" data-species="tiburon-martillo">Tiburón Martillo</div>
+        <div class="species-type-item" data-species="tiburon-tigre">Tiburón Tigre</div>
+        <div class="species-type-item" data-species="tiburon-ballena">Tiburón Ballena</div>
+        <div class="species-type-item" data-species="tiburon-toro">Tiburón Toro</div>
+        <div class="species-type-item" data-species="tiburon-mako">Tiburón Mako</div>
+      </div>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+
+  <div id="tiburon-blancoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Blanco</h3>
+      <img src="tiburones.jfif" alt="Tiburón Blanco" class="species-detail-image">
+      <p>El gran tiburón blanco (Carcharodon carcharias) es uno de los depredadores más grandes y conocidos. Puede medir hasta 6 metros y pesar más de una tonelada. Tiene un cuerpo robusto, de color gris o pardusco en el dorso y blanco en el vientre. Se encuentra en aguas templadas y cálidas de casi todos los océanos. Su dieta varía con la edad: los jóvenes comen peces y rayas, mientras que los adultos prefieren focas, leones marinos y delfines. Está clasificado como "Vulnerable" por la UICN debido a la pesca y la degradación de su hábitat.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+<div id="tiburon-martilloDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Martillo</h3>
+      <img src="tiburones.jfif" alt="Tiburón Martillo" class="species-detail-image">
+      <p>El tiburón martillo (familia Sphyrnidae) es conocido por su cabeza en forma de T, que le otorga una visión de casi 360 grados. El gran tiburón martillo puede alcanzar los 6.1 metros. Habitan en mares tropicales y templados de todo el mundo. Son cazadores nocturnos que se alimentan de calamares, pulpos, crustáceos y rayas. La mayoría de las especies están en peligro debido a la sobrepesca, ya que sus aletas son muy cotizadas.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+<div id="tiburon-tigreDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Tigre</h3>
+      <img src="tiburones.jfif" alt="Tiburón Tigre" class="species-detail-image">
+      <p>El tiburón tigre (Galeocerdo cuvier) es conocido como el "basurero del mar" por su dieta increíblemente amplia. Puede medir más de 5 metros y se encuentra en aguas tropicales y templadas. Tiene rayas oscuras en el dorso que se difuminan con la edad. Se alimenta de peces, tortugas, aves, mamíferos marinos e incluso basura. Está clasificado como "Casi Amenazado" por la UICN debido a la pesca por sus aletas y piel.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+<div id="tiburon-ballenaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Ballena</h3>
+      <img src="tiburones.jfif" alt="Tiburón Ballena" class="species-detail-image">
+      <p>El tiburón ballena (Rhincodon typus) es el pez más grande del mundo, un gigante apacible que se alimenta por filtración. Puede alcanzar los 18 metros de longitud. Su cuerpo es grisáceo con un patrón único de puntos y líneas blancas o amarillentas. Se alimenta de plancton, krill y pequeños peces. Se encuentra en aguas cálidas y está clasificado como "En Peligro" por la UICN debido a la pesca, colisiones con barcos y contaminación.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+<div id="tiburon-toroDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Toro</h3>
+      <img src="tiburones.jfif" alt="Tiburón Toro" class="species-detail-image">
+      <p>El tiburón toro (Carcharhinus leucas) es conocido por su capacidad para habitar tanto en agua salada como en agua dulce. Tiene un cuerpo robusto y un hocico corto y redondeado. Puede alcanzar los 4 metros de longitud. Se alimenta de una gran variedad de presas, incluyendo peces, otros tiburones, rayas y crustáceos. Es considerado peligroso para los humanos debido a su preferencia por aguas costeras poco profundas.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+<div id="tiburon-makoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Mako</h3>
+      <img src="tiburones.jfif" alt="Tiburón Mako" class="species-detail-image">
+      <p>El tiburón mako (Isurus oxyrinchus) es el tiburón más rápido, capaz de alcanzar velocidades de hasta 74 km/h. Tiene un cuerpo fusiforme y muy hidrodinámico. Se encuentra en mares tropicales y templados de todo el mundo. Se alimenta de peces como el atún y la caballa, así como de otros tiburones y calamares. Está clasificado como "En Peligro de Extinción" por la UICN debido a la sobrepesca.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+
+  <div id="tiburon-blancoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Blanco</h3>
+      <img src="tiburones.jfif" alt="Tiburón Blanco" class="species-detail-image">
+      <p>El gran tiburón blanco (Carcharodon carcharias) es uno de los depredadores más grandes y conocidos. Puede medir hasta 6 metros y pesar más de una tonelada. Tiene un cuerpo robusto, de color gris o pardusco en el dorso y blanco en el vientre. Se encuentra en aguas templadas y cálidas de casi todos los océanos. Su dieta varía con la edad: los jóvenes comen peces y rayas, mientras que los adultos prefieren focas, leones marinos y delfines. Está clasificado como "Vulnerable" por la UICN debido a la pesca y la degradación de su hábitat.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+
+  <div id="tiburon-blancoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tiburón Blanco</h3>
+      <img src="tiburones.jfif" alt="Tiburón Blanco" class="species-detail-image">
+      <p>El gran tiburón blanco (Carcharodon carcharias) es uno de los depredadores más grandes y conocidos. Puede medir hasta 6 metros y pesar más de una tonelada. Tiene un cuerpo robusto, de color gris o pardusco en el dorso y blanco en el vientre. Se encuentra en aguas templadas y cálidas de casi todos los océanos. Su dieta varía con la edad: los jóvenes comen peces y rayas, mientras que los adultos prefieren focas, leones marinos y delfines. Está clasificado como "Vulnerable" por la UICN debido a la pesca y la degradación de su hábitat.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tiburones</button>
+    </div>
+</div>
+
+  <div id="ballenasDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballenas: Gigantes Gentiles del Mar</h3>
+      <img src="ballenas.jfif" alt="Ballenas" class="species-detail-image">
+      <p>Las ballenas son mamíferos marinos fascinantes, adaptados a la vida acuática. Respiran aire, son de sangre caliente y se caracterizan por su gran tamaño, desde la imponente ballena azul, el animal más grande del planeta, hasta especies más pequeñas. Se comunican a través de complejos sonidos y realizan migraciones épicas a través de los océanos. Existen dos tipos principales: las ballenas barbadas (misticetos), que filtran pequeños organismos como el krill, y las ballenas dentadas (odontocetos), que son cazadoras activas.</p>
+      <div class="species-types-grid">
+        <div class="species-type-item" data-species="ballena-azul">Ballena Azul</div>
+        <div class="species-type-item" data-species="ballena-jorobada">Ballena Jorobada</div>
+        <div class="species-type-item" data-species="ballena-franca">Ballena Franca</div>
+        <div class="species-type-item" data-species="cachalote">Cachalote</div>
+        <div class="species-type-item" data-species="orca">Orca</div>
+        <div class="species-type-item" data-species="ballena-gris">Ballena Gris</div>
+      </div>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+  <div id="ballena-azulDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Azul</h3>
+      <img src="ballenas.jfif" alt="Ballena Azul" class="species-detail-image">
+      <p>La ballena azul (Balaenoptera musculus) es el animal más grande del planeta. Puede medir hasta 30 metros y pesar más de 170 toneladas. Se alimenta casi exclusivamente de krill, consumiendo hasta 3.600 kg al día. Es el animal más ruidoso de la Tierra, con sonidos que pueden oírse a cientos de kilómetros. Se encuentra en todos los océanos y está clasificada como "En Peligro" por la UICN debido a la caza histórica y las amenazas actuales como colisiones con barcos y la contaminación.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-jorobadaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Jorobada</h3>
+      <img src="ballenas.jfif" alt="Ballena Jorobada" class="species-detail-image">
+      <p>La ballena jorobada (Megaptera novaeangliae) es conocida por sus acrobacias y cantos complejos. Mide entre 12 y 16 metros y pesa alrededor de 36,000 kg. Tiene aletas pectorales muy largas y una joroba distintiva. Se alimenta de krill y peces pequeños usando una técnica de "red de burbujas". Realiza una de las migraciones más largas, viajando desde aguas polares de alimentación hasta aguas tropicales de reproducción. Su población se ha recuperado gracias a la prohibición de la caza.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-francaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Franca</h3>
+      <img src="ballenas.jfif" alt="Ballena Franca" class="species-detail-image">
+      <p>La ballena franca austral (Eubalaena australis) se caracteriza por la ausencia de aleta dorsal y la presencia de callosidades en su cabeza, que son únicas para cada individuo. Mide entre 13 y 18 metros y pesa entre 40 y 80 toneladas. Se alimenta de krill y pequeños crustáceos. Migra desde las zonas de alimentación en la Antártida hasta las costas de Argentina, Sudáfrica y Australia para reproducirse. La población se está recuperando lentamente de la caza histórica.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="cachaloteDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Cachalote</h3>
+      <img src="ballenas.jfif" alt="Cachalote" class="species-detail-image">
+      <p>El cachalote (Physeter macrocephalus) es el cetáceo dentado más grande, con una cabeza enorme que puede suponer un tercio de su longitud. Los machos pueden alcanzar los 20.5 metros. Se alimenta principalmente de calamares, incluyendo el calamar gigante, y puede sumergirse a grandes profundidades para cazar. Se encuentra en todos los océanos y está clasificado como "Vulnerable" por la UICN. Fue cazado por su espermaceti, una sustancia cerosa en su cabeza.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="orcaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Orca</h3>
+      <img src="ballenas.jfif" alt="Orca" class="species-detail-image">
+      <p>La orca (Orcinus orca) es la especie de delfín más grande y un superdepredador. Mide hasta 10 metros y tiene una distintiva coloración blanca y negra. Se encuentra en todos los océanos y tiene una dieta variada que incluye peces, focas, delfines y tiburones. Son muy inteligentes y sociales, viviendo en grupos familiares llamados "pods". Algunas poblaciones están en peligro de extinción debido a la contaminación y la disminución de sus presas.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-grisDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Gris</h3>
+      <img src="ballenas.jfif" alt="Ballena Gris" class="species-detail-image">
+      <p>La ballena gris (Eschrichtius robustus) es conocida por su larga migración de más de 9,000 km desde el Ártico hasta las lagunas de Baja California Sur, México, para reproducirse. Mide hasta 15 metros y tiene una piel gris moteada con parásitos. Se alimenta de pequeños crustáceos del fondo marino. La población del Pacífico Norte se ha recuperado de la caza, pero la del Atlántico Norte se extinguió.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+  <div id="ballena-azulDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Azul</h3>
+      <img src="ballenas.jfif" alt="Ballena Azul" class="species-detail-image">
+      <p>La ballena azul (Balaenoptera musculus) es el animal más grande del planeta. Puede medir hasta 30 metros y pesar más de 170 toneladas. Se alimenta casi exclusivamente de krill, consumiendo hasta 3.600 kg al día. Es el animal más ruidoso de la Tierra, con sonidos que pueden oírse a cientos de kilómetros. Se encuentra en todos los océanos y está clasificada como "En Peligro" por la UICN debido a la caza histórica y las amenazas actuales como colisiones con barcos y la contaminación.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-jorobadaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Jorobada</h3>
+      <img src="ballenas.jfif" alt="Ballena Jorobada" class="species-detail-image">
+      <p>La ballena jorobada (Megaptera novaeangliae) es conocida por sus acrobacias y cantos complejos. Mide entre 12 y 16 metros y pesa alrededor de 36,000 kg. Tiene aletas pectorales muy largas y una joroba distintiva. Se alimenta de krill y peces pequeños usando una técnica de "red de burbujas". Realiza una de las migraciones más largas, viajando desde aguas polares de alimentación hasta aguas tropicales de reproducción. Su población se ha recuperado gracias a la prohibición de la caza.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-francaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Franca</h3>
+      <img src="ballenas.jfif" alt="Ballena Franca" class="species-detail-image">
+      <p>La ballena franca austral (Eubalaena australis) se caracteriza por la ausencia de aleta dorsal y la presencia de callosidades en su cabeza, que son únicas para cada individuo. Mide entre 13 y 18 metros y pesa entre 40 y 80 toneladas. Se alimenta de krill y pequeños crustáceos. Migra desde las zonas de alimentación en la Antártida hasta las costas de Argentina, Sudáfrica y Australia para reproducirse. La población se está recuperando lentamente de la caza histórica.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="cachaloteDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Cachalote</h3>
+      <img src="ballenas.jfif" alt="Cachalote" class="species-detail-image">
+      <p>El cachalote (Physeter macrocephalus) es el cetáceo dentado más grande, con una cabeza enorme que puede suponer un tercio de su longitud. Los machos pueden alcanzar los 20.5 metros. Se alimenta principalmente de calamares, incluyendo el calamar gigante, y puede sumergirse a grandes profundidades para cazar. Se encuentra en todos los océanos y está clasificado como "Vulnerable" por la UICN. Fue cazado por su espermaceti, una sustancia cerosa en su cabeza.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="orcaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Orca</h3>
+      <img src="ballenas.jfif" alt="Orca" class="species-detail-image">
+      <p>La orca (Orcinus orca) es la especie de delfín más grande y un superdepredador. Mide hasta 10 metros y tiene una distintiva coloración blanca y negra. Se encuentra en todos los océanos y tiene una dieta variada que incluye peces, focas, delfines y tiburones. Son muy inteligentes y sociales, viviendo en grupos familiares llamados "pods". Algunas poblaciones están en peligro de extinción debido a la contaminación y la disminución de sus presas.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+    <div id="ballena-grisDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Ballena Gris</h3>
+      <img src="ballenas.jfif" alt="Ballena Gris" class="species-detail-image">
+      <p>La ballena gris (Eschrichtius robustus) es conocida por su larga migración de más de 9,000 km desde el Ártico hasta las lagunas de Baja California Sur, México, para reproducirse. Mide hasta 15 metros y tiene una piel gris moteada con parásitos. Se alimenta de pequeños crustáceos del fondo marino. La población del Pacífico Norte se ha recuperado de la caza, pero la del Atlántico Norte se extinguió.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Ballenas</button>
+    </div>
+    </div>
+
+  <div id="camaronesDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarones: Pequeños Tesoros del Océano</h3>
+      <img src="camarones.jfif" alt="Camarones" class="species-detail-image">
+      <p>Los camarones marinos son crustáceos decápodos, parientes de los cangrejos y langostas, que se encuentran en todos los océanos. Poseen un cuerpo alargado con un exoesqueleto rígido y diez patas. Su tamaño varía y pueden ser de colores vivos o semitransparentes. Son omnívoros, alimentándose de materia vegetal, algas y pequeños organismos. Algunas especies son "camarones limpiadores", que se alimentan de parásitos de peces.</p>
+      <div class="species-types-grid">
+        <div class="species-type-item" data-species="camaron-blanco">Camarón Blanco</div>
+        <div class="species-type-item" data-species="camaron-tigre">Camarón Tigre</div>
+        <div class="species-type-item" data-species="camaron-rosa">Camarón Rosa</div>
+        <div class="species-type-item" data-species="camaron-cafe">Camarón Café</div>
+        <div class="species-type-item" data-species="camaron-rojo">Camarón Rojo</div>
+        <div class="species-type-item" data-species="camaron-mantis">Camarón Mantis</div>
+      </div>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+  <div id="camaron-blancoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Blanco</h3>
+      <img src="camarones.jfif" alt="Camarón Blanco" class="species-detail-image">
+      <p>El camarón blanco (Litopenaeus vannamei) es una de las especies de crustáceos más cultivadas y de mayor importancia comercial a nivel mundial. Tiene un cuerpo translúcido de color blanco o gris claro y puede alcanzar hasta 23 cm de longitud. Originario de la costa oriental del Océano Pacífico, ha sido introducido en muchas otras regiones para la acuicultura. Es omnívoro y su ciclo de vida pasa por varias etapas larvarias antes de convertirse en adulto.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+    <div id="camaron-tigreDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Tigre</h3>
+      <img src="camarones.jfif" alt="Camarón Tigre" class="species-detail-image">
+      <p>El camarón tigre (Penaeus monodon) es el más grande de los camarones comerciales, pudiendo alcanzar hasta 36 cm. Se distingue por su caparazón oscuro con rayas claras. Originario de los océanos Índico y Pacífico, ha sido introducido en otras partes del mundo, a veces como especie invasora. Es muy apreciado en la gastronomía por su carne tierna y jugosa.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+    <div id="camaron-rosaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Rosa</h3>
+      <img src="camarones.jfif" alt="Camarón Rosa" class="species-detail-image">
+      <p>El camarón rosa (Farfantepenaeus duorarum) es apreciado por su sabor dulce y textura firme. Se encuentra en la costa atlántica de América, desde Florida hasta la Península de Yucatán. Los adultos viven en fondos marinos arenosos, mientras que los juveniles se desarrollan en lagunas costeras. Es un recurso pesquero fundamental en la Sonda de Campeche (México).</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+    <div id="camaron-cafeDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Café</h3>
+      <img src="camarones.jfif" alt="Camarón Café" class="species-detail-image">
+      <p>El camarón café (Farfantepenaeus aztecus y F. californiensis) es una especie de gran importancia comercial en América. Habita en fondos de lodo, arena o arcilla. Los jóvenes crecen en estuarios y lagunas costeras antes de migrar al mar. Es una de las pesquerías más importantes de México, con capturas tanto en el Golfo de México como en el Pacífico.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+    <div id="camaron-rojoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Rojo</h3>
+      <img src="camarones.jfif" alt="Camarón Rojo" class="species-detail-image">
+      <p>El camarón rojo (Aristeus antennatus), o gamba roja, es muy apreciado en la gastronomía mediterránea. Vive en aguas profundas del Mar Mediterráneo y el Atlántico oriental. Tiene un característico color rojo intenso y un sabor dulce y delicado. Se pesca mediante arrastre de fondo y es un manjar en muchas culturas.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+    <div id="camaron-mantisDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Camarón Mantis</h3>
+      <img src="camarones.jfif" alt="Camarón Mantis" class="species-detail-image">
+      <p>El camarón mantis (orden Stomatopoda) es un crustáceo conocido por sus poderosas pinzas, capaces de golpear a sus presas con una velocidad increíble, generando burbujas de cavitación. Posee uno de los sistemas de visión más complejos del reino animal, con 12 a 16 tipos de fotorreceptores. Habita en aguas tropicales y subtropicales, a menudo en arrecifes de coral.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Camarones</button>
+    </div>
+    </div>
+
+  <div id="tortugasDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tortugas Marinas: Viajeras Ancestrales</h3>
+      <img src="tortugas.jfif" alt="Tortugas Marinas" class="species-detail-image">
+      <p>Las tortugas marinas son reptiles fascinantes que han habitado los océanos durante más de 100 millones de años. Se caracterizan por su caparazón óseo que las protege y sus aletas adaptadas para la vida acuática. Aunque pasan la mayor parte de su vida en el mar, las hembras regresan a las playas para anidar y depositar sus huevos. Se alimentan de una variedad de organismos, desde algas y medusas hasta crustáceos, dependiendo de la especie. Son criaturas migratorias y desempeñan un papel vital en el mantenimiento de la salud de los ecosistemas marinos.</p>
+      <div class="species-types-grid">
+        <div class="species-type-item" data-species="tortuga-verde">Tortuga Verde</div>
+        <div class="species-type-item" data-species="tortuga-carey">Tortuga Carey</div>
+        <div class="species-type-item" data-species="tortuga-laud">Tortuga Laúd</div>
+        <div class="species-type-item" data-species="tortuga-boba">Tortuga Boba</div>
+      </div>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+  <div id="tortuga-verdeDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tortuga Verde</h3>
+      <img src="tortugas.jfif" alt="Tortuga Verde" class="species-detail-image">
+      <p>La tortuga verde (Chelonia mydas) es una de las tortugas marinas más grandes, llegando a pesar hasta 395 kg. Su nombre proviene del color verdoso de su grasa. Los adultos son herbívoros y se alimentan de pastos marinos y algas. Se encuentra en mares tropicales y subtropicales y está en peligro de extinción debido a la caza, la recolección de huevos y la pérdida de hábitat.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tortugas</button>
+    </div>
+    </div>
+    <div id="tortuga-careyDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tortuga Carey</h3>
+      <img src="tortugas.jfif" alt="Tortuga Carey" class="species-detail-image">
+      <p>La tortuga carey (Eretmochelys imbricata) se distingue por su pico afilado y curvo y su caparazón con escudos superpuestos de colores llamativos. Es una de las especies más pequeñas, midiendo hasta 114 cm. Se alimenta principalmente de esponjas de mar, jugando un papel crucial en la salud de los arrecifes de coral. Está en peligro crítico de extinción debido a la caza por su caparazón.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tortugas</button>
+    </div>
+    </div>
+    <div id="tortuga-laudDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tortuga Laúd</h3>
+      <img src="tortugas.jfif" alt="Tortuga Laúd" class="species-detail-image">
+      <p>La tortuga laúd (Dermochelys coriacea) es la tortuga marina más grande, pudiendo superar los 900 kg. Su caparazón es único, ya que está formado por tejido blando y piel similar al cuero. Son buceadoras de gran profundidad y se alimentan de medusas. Están en peligro de extinción debido a la captura incidental, el saqueo de nidos y la contaminación por plásticos.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tortugas</button>
+    </div>
+    </div>
+    <div id="tortuga-bobaDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Tortuga Boba</h3>
+      <img src="tortugas.jfif" alt="Tortuga Boba" class="species-detail-image">
+      <p>La tortuga boba (Caretta caretta), o caguama, tiene una cabeza grande y mandíbulas fuertes para triturar presas como moluscos y crustáceos. Es una especie omnívora y migratoria que habita en todos los océanos cálidos. Está clasificada como "Vulnerable" por la UICN, amenazada por la pesca accidental, la destrucción de su hábitat y la contaminación.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Tortugas</button>
+    </div>
+    </div>
+
+  <div id="estrellas-de-marDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrellas de Mar: Joyas del Lecho Marino</h3>
+      <img src="estrellas de mar.jfif" alt="Estrellas de Mar" class="species-detail-image">
+      <p>Las estrellas de mar son equinodermos marinos que se caracterizan por su simetría radial, generalmente con cinco o más brazos que irradian de un disco central. Se mueven utilizando miles de pequeños pies tubulares en la parte inferior de sus brazos. Son depredadores oportunistas, alimentándose de moluscos, crustáceos y otros invertebrados. Tienen una asombrosa capacidad de regeneración, pudiendo reconstruir brazos perdidos e incluso un cuerpo entero a partir de un solo brazo si una parte del disco central está presente. Habitan en todos los océanos, desde las zonas intermareales hasta las profundidades abisales.</p>
+      <div class="species-types-grid">
+        <div class="species-type-item" data-species="estrella-de-mar-comun">Estrella de Mar Común</div>
+        <div class="species-type-item" data-species="estrella-de-mar-girasol">Estrella de Mar Girasol</div>
+        <div class="species-type-item" data-species="estrella-de-mar-cojin">Estrella de Mar Cojín</div>
+        <div class="species-type-item" data-species="estrella-de-mar-corona-de-espinas">Estrella de Mar Corona de Espinas</div>
+        <div class="species-type-item" data-species="estrella-de-mar-azul">Estrella de Mar Azul</div>
+        <div class="species-type-item" data-species="estrella-de-mar-chocolate">Estrella de Mar Chocolate</div>
+      </div>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+  <div id="estrella-de-mar-comunDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Común</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Común" class="species-detail-image">
+      <p>La estrella de mar común (Asterias rubens) es una de las especies más conocidas del Atlántico noreste. Tiene generalmente cinco brazos y su coloración es muy variable, desde naranja hasta violeta. Se alimenta de moluscos como mejillones y almejas, y tiene una notable capacidad de regeneración. Se reproduce sexual y asexualmente.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+    <div id="estrella-de-mar-girasolDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Girasol</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Girasol" class="species-detail-image">
+      <p>La estrella de mar girasol (Pycnopodia helianthoides) es la más grande y rápida, con hasta 24 brazos. Es un depredador crucial de erizos de mar en el Pacífico Norte. Su población ha disminuido drásticamente debido al "síndrome de desgaste de las estrellas de mar", y está clasificada como "En Peligro Crítico" por la UICN.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+    <div id="estrella-de-mar-cojinDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Cojín</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Cojín" class="species-detail-image">
+      <p>La estrella de mar cojín (Oreaster reticulatus) es una especie grande del Atlántico occidental, con un cuerpo inflado y brazos cortos. Se alimenta de microorganismos y materia orgánica. Está amenazada por la sobreexplotación para ser vendida como objeto decorativo.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+    <div id="estrella-de-mar-corona-de-espinasDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Corona de Espinas</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Corona de Espinas" class="species-detail-image">
+      <p>La estrella de mar corona de espinas (Acanthaster planci) es una de las más grandes y está cubierta de espinas venenosas. Se alimenta de corales duros y puede ser una gran amenaza para los arrecifes de coral cuando sus poblaciones aumentan descontroladamente. Se encuentra en los océanos Índico y Pacífico.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+    <div id="estrella-de-mar-azulDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Azul</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Azul" class="species-detail-image">
+      <p>La estrella de mar azul (Linckia laevigata) se encuentra en el Indo-Pacífico tropical. Su color es generalmente azul intenso. Se alimenta de detritos y pequeños invertebrados. Es popular en acuarios marinos, pero es muy sensible a los cambios en la calidad del agua.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+    <div id="estrella-de-mar-chocolateDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Estrella de Mar Chocolate</h3>
+      <img src="estrellas de mar.jfif" alt="Estrella de Mar Chocolate" class="species-detail-image">
+      <p>La estrella de mar chocolate (Protoreaster nodosus) tiene protuberancias oscuras que parecen chispas de chocolate. Se encuentra en el Indo-Pacífico y se alimenta de esponjas, corales y otros invertebrados. No es adecuada para acuarios de arrecife debido a su apetito voraz.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Estrellas de Mar</button>
+    </div>
+    </div>
+
+  <div id="coral-cuerno-de-ciervoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral Cuerno de Ciervo: El Bosque Submarino</h3>
+      <img src="coral.jfif" alt="Coral Cuerno de Ciervo" class="species-detail-image">
+      <p>El coral cuerno de ciervo (Acropora cervicornis) es un coral pétreo ramificado crucial para los arrecifes del Atlántico occidental. Sus colonias, que se asemejan a las astas de un ciervo, pueden superar los 2 metros de altura. Su esqueleto de carbonato cálcico es poroso y ligero. Se encuentra en aguas poco profundas del Caribe, Golfo de México, Bahamas y Florida. Se alimenta a través de la simbiosis con algas zooxantelas y capturando plancton. Se reproduce sexual y asexualmente, principalmente por fragmentación. Está clasificado como "En Peligro Crítico" por la UICN debido a enfermedades, el calentamiento global y daños físicos.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+
+  <div id="coral-cerebroDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral Cerebro: La Mente del Arrecife</h3>
+      <img src="coral.jfif" alt="Coral Cerebro" class="species-detail-image">
+      <p>Los corales cerebro (familia Faviidae) son un tipo de coral duro que crece en una forma esférica u ovalada con surcos y crestas que se asemejan a la superficie de un cerebro. Estas formaciones masivas pueden vivir durante cientos de años y son componentes cruciales de los arrecifes de coral, proporcionando una estructura sólida y protección contra las corrientes y las olas. Al igual que otros corales, albergan algas simbióticas (zooxantelas) que les proporcionan nutrientes a través de la fotosíntesis. Son importantes para la biodiversidad y la salud del ecosistema de arrecife.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+
+  <div id="coral-de-fuegoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral de Fuego: Belleza con Precaución</h3>
+      <img src="coral.jfif" alt="Coral de Fuego" class="species-detail-image">
+      <p>El coral de fuego (Millepora alcicornis) no es un verdadero coral, sino un hidrocoral, más emparentado con las medusas e hidras. Forma colonias con una estructura similar a la de los corales duros, pero posee nematocistos (células urticantes) que liberan una toxina al contacto, causando una sensación de quemazón intensa, de ahí su nombre. Se encuentra en aguas tropicales y subtropicales, a menudo creciendo sobre otros corales o rocas. A pesar de su capacidad urticante, es un componente importante del ecosistema de arrecife, proporcionando refugio a pequeños invertebrados y peces.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+
+  <div id="coral-blanqueadoDetail" class="info-section species-detail-container" style="display: none;">
+    <div class="content-wrapper">
+      <h3>Coral Blanqueado: Un Grito de Alerta del Océano</h3>
+      <img src="coral.jfif" alt="Coral Blanqueado" class="species-detail-image">
+      <p>El blanqueamiento de coral es un fenómeno que ocurre cuando los corales expulsan las algas simbióticas (zooxantelas) que viven en sus tejidos, lo que les da su color y les proporciona la mayor parte de su energía. Sin estas algas, los corales se vuelven blancos y son mucho más susceptibles a enfermedades y la muerte. El blanqueamiento es causado principalmente por el aumento de la temperatura del agua, la acidificación del océano y la contaminación. Es un indicador crítico de la salud de los arrecifes de coral y un signo alarmante del impacto del cambio climático en los ecosistemas marinos.</p>
+      <button class="explore-button back-to-species-list" style="margin-top: 40px;">Volver a Especies</button>
+    </div>
+  </div>
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Regístrate</h3>
+      <p>Crea una cuenta para explorar el océano digital.</p>
+      <form>
+        <input type="text" placeholder="Primer Nombre" required>
+        <input type="text" placeholder="Segundo Nombre">
+        <input type="text" placeholder="Apellidos" required>
+        <input type="email" placeholder="Correo Electrónico" required>
+        <input type="password" placeholder="Contraseña" required>
+        <button type="submit">Crear Cuenta</button>
+      </form>
+      <div class="social-login">
+        <p>O regístrate con:</p>
+        <button class="social-btn google">Google</button>
+        <button class="social-btn facebook">Facebook</button>
+        <button class="social-btn microsoft">Microsoft</button>
+        <button class="social-btn apple">Apple</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Iniciar Sesión</h3>
+      <p>Ingresa a tu cuenta para ver tu contenido.</p>
+      <form>
+        <input type="email" placeholder="Correo Electrónico" required>
+        <input type="password" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+      </form>
+      <div class="social-login">
+        <p>O ingresa con:</p>
+        <button class="social-btn google">Google</button>
+        <button class="social-btn facebook">Facebook</button>
+        <button class="social-btn microsoft">Microsoft</button>
+        <button class="social-btn apple">Apple</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="creditsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Créditos</h3>
+      <p>Esta página fue creada con la ayuda de Gemini, un modelo de lenguaje grande de Google.</p>
+      <p>Diseño y desarrollo por: MTM</p>
+    </div>
+  </div>
+
+  <div id="premiumModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>MTM Premium</h3>
+      <p>¡Desbloquea contenido exclusivo, estudios detallados y una experiencia sin anuncios con MTM Premium!</p>
+      <button type="submit">Suscribirse Ahora</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="content-wrapper">
+      <p>&copy; 2025 MTM — Tu Portal al Océano Digital. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <footer>
+    <div class="content-wrapper">
+      <p>&copy; 2025 MTM — Tu Portal al Océano Digital. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <footer>
+    <div class="content-wrapper">
+      <p>&copy; 2025 MTM — Tu Portal al Océano Digital. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // --- Generic Modal Handler ---
+      function setupModal(btnId, modalId) {
+        const modal = document.getElementById(modalId);
+        const btn = document.getElementById(btnId);
+        const closeBtn = document.querySelector(`#${modalId} .close-btn`);
+
+        if (btn) {
+          btn.addEventListener('click', () => {
+            if (modal) modal.style.display = 'block';
+          });
+        }
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            if (modal) modal.style.display = 'none';
+          });
+        }
+      }
+
+      // --- Setup Modals ---
+      setupModal('registerBtn', 'registerModal');
+      setupModal('loginBtn', 'loginModal');
+      setupModal('creditsBtn', 'creditsModal');
+      setupModal('premiumBtn', 'premiumModal');
+
+      // --- Close modals by clicking outside ---
+      window.addEventListener('click', (event) => {
+        if (event.target.classList.contains('modal')) {
+          event.target.style.display = 'none';
+        }
+      });
+
+      // --- Alert for remaining button ---
+      document.getElementById('menuToggle').addEventListener('click', () => {
+        alert('Menú de usuario (a implementar)...');
+      });
+
+      // --- Hamburger Menu Toggle ---
+      const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
+      const mobileNav = document.getElementById('mobileNav');
+
+      if (hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => {
+          if (mobileNav.style.display === 'flex') {
+            mobileNav.style.display = 'none';
+          } else {
+            mobileNav.style.display = 'flex';
+          }
+        });
+      }
+
+      // Close mobile nav if window is resized to desktop size
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          mobileNav.style.display = 'none';
+        }
+      });
+
+      // --- Species Section Functionality ---
+      const mainSpeciesSection = document.getElementById('species');
+      const exploreSpeciesBtn = document.getElementById('exploreSpeciesBtn');
+      const speciesListContainer = document.getElementById('speciesListContainer');
+      const backToMainSpeciesBtn = document.getElementById('backToMainSpeciesBtn');
+      const speciesItems = document.querySelectorAll('.species-item');
+      const speciesDetailContainers = document.querySelectorAll('.species-detail-container');
+      const backToSpeciesListBtns = document.querySelectorAll('.back-to-species-list');
+
+      // Show species list and hide main species section
+      if (exploreSpeciesBtn && speciesListContainer && mainSpeciesSection) {
+        exploreSpeciesBtn.addEventListener('click', () => {
+          exploreSpeciesBtn.classList.remove('pulse-animation'); // Reset animation
+          void exploreSpeciesBtn.offsetWidth; // Trigger reflow
+          exploreSpeciesBtn.classList.add('pulse-animation');
+
+          mainSpeciesSection.style.display = 'none';
+          speciesListContainer.style.display = 'block';
+          speciesListContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // Hide species list and show main species section
+      if (backToMainSpeciesBtn && speciesListContainer && mainSpeciesSection) {
+        backToMainSpeciesBtn.addEventListener('click', () => {
+          speciesListContainer.style.display = 'none';
+          mainSpeciesSection.style.display = 'block';
+          mainSpeciesSection.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // Show specific species detail and hide species list
+      speciesItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const speciesId = item.dataset.species;
+          const detailSectionId = `${speciesId}Detail`;
+          const detailSection = document.getElementById(detailSectionId);
+
+          if (speciesListContainer) {
+            speciesListContainer.style.display = 'none';
+          }
+
+          speciesDetailContainers.forEach(container => {
+            container.style.display = 'none'; // Hide all detail sections first
+          });
+
+          if (detailSection) {
+            detailSection.style.display = 'block';
+            detailSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Hide specific species detail and show species list
+      backToSpeciesListBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          speciesDetailContainers.forEach(container => {
+            container.style.display = 'none'; // Hide all detail sections
+          });
+          if (speciesListContainer) {
+            speciesListContainer.style.display = 'block';
+            speciesListContainer.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // --- News Section Functionality ---
+      const readMoreNewsBtn = document.getElementById('readMoreNewsBtn');
+      const latestNewsSection = document.getElementById('latest-news-section');
+      const backToNewsBtn = document.getElementById('backToNewsBtn');
+      const newsMainSection = document.getElementById('news'); // Renamed to avoid conflict
+
+      if (readMoreNewsBtn && latestNewsSection && backToNewsBtn && newsMainSection) {
+        readMoreNewsBtn.addEventListener('click', (event) => {
+          event.preventDefault(); // Prevent default anchor link behavior
+          newsMainSection.style.display = 'none'; // Hide the main news section
+          latestNewsSection.style.display = 'block'; // Show the latest news section
+          latestNewsSection.scrollIntoView({ behavior: 'smooth' }); // Scroll to the new section
+        });
+
+        backToNewsBtn.addEventListener('click', () => {
+          latestNewsSection.style.display = 'none'; // Hide the latest news section
+          newsMainSection.style.display = 'block'; // Show the main news section
+          newsMainSection.scrollIntoView({ behavior: 'smooth' }); // Scroll back to the main news section
+        });
+
+        const hideNewsBtn = document.getElementById('hideNewsBtn');
+        if (hideNewsBtn) {
+          hideNewsBtn.addEventListener('click', () => {
+            latestNewsSection.style.display = 'none'; // Hide the latest news section
+            newsMainSection.style.display = 'block'; // Ensure main news section is visible
+            newsMainSection.scrollIntoView({ behavior: 'smooth' }); // Scroll back to the main news section
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
